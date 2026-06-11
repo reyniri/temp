@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>venuehub — MVP at a glance</title>
+<style>
+  :root{
+    --bg:#faf9f5; --surface:#ffffff; --surface2:#f3f1ea; --line:#e3e0d6;
+    --text:#2b2b29; --text2:#5f5e5a; --text3:#908f88;
+    --info-bg:#e6f1fb; --info-fg:#185fa5;
+    --danger-bg:#fceaea; --danger-fg:#a32d2d;
+    --warn-bg:#faeeda; --warn-fg:#854f0b;
+    --ok-bg:#eaf3de; --ok-fg:#3b6d11;
+    --radius:10px; --radius-sm:7px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--bg); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.55; -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:880px; margin:0 auto; padding:28px 20px 60px;}
+  h1{font-size:24px; font-weight:600; margin:0 0 4px;}
+  .sub{font-size:13px; color:var(--text3); margin-bottom:10px;}
+  .lede{font-size:14px; color:var(--text2); margin:0 0 22px; max-width:640px;}
+  .tabs{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:22px;}
+  .tab{display:inline-flex; align-items:center; gap:6px; font-size:13px; padding:8px 13px;
+    border-radius:var(--radius-sm); cursor:pointer; border:1px solid var(--line);
+    background:transparent; color:var(--text2); font-weight:400;}
+  .tab.on{border-color:#bdb9ab; background:var(--surface2); color:var(--text); font-weight:600;}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  .grid-auto{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:12px;}
+  .grid-auto-sm{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px;}
+  .card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:14px 16px;}
+  .card .ttl{display:flex; align-items:center; gap:8px; font-weight:600; font-size:14px; margin-bottom:6px;}
+  .card p{font-size:13px; color:var(--text2); margin:0;}
+  .dot{width:28px; height:28px; border-radius:7px; display:inline-flex; align-items:center; justify-content:center; font-size:15px; flex:0 0 auto;}
+  .listcard{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:14px 16px;}
+  .listcard h4{margin:0 0 8px; font-size:14px; font-weight:600;}
+  .listcard ul{margin:0; padding-left:18px; font-size:13px; color:var(--text2); line-height:1.7;}
+  .chips{display:flex; flex-wrap:wrap; gap:6px;}
+  .chip{font-size:12px; background:var(--surface2); color:var(--text2); padding:5px 11px; border-radius:var(--radius-sm);}
+  .pcard{background:var(--surface2); border-radius:var(--radius-sm); padding:14px 16px;}
+  .pcard h4{margin:0 0 6px; font-size:14px; font-weight:600;}
+  .pcard p{margin:0; font-size:12px; color:var(--text2); line-height:1.6;}
+  .stat{background:var(--surface2); border-radius:var(--radius-sm); padding:14px 16px;}
+  .stat .l{font-size:12px; color:var(--text2); margin:0 0 4px;}
+  .stat .v{font-size:20px; font-weight:600; margin:0 0 2px;}
+  .stat .s{font-size:12px; color:var(--text3); margin:0;}
+  .label{font-size:13px; color:var(--text2); margin:0 0 8px;}
+  .hint{font-size:13px; color:var(--text3); line-height:1.6; margin:12px 0 0;}
+  code{background:var(--surface2); padding:1px 5px; border-radius:4px; font-size:0.9em;}
+  .step{display:flex; gap:12px;}
+  .stepc{display:flex; flex-direction:column; align-items:center;}
+  .stepline{width:0; flex:1; border-left:1px solid #cfccc0; min-height:14px;}
+  .step .body{padding-bottom:14px;}
+  .step .body h4{font-weight:600; font-size:14px; margin:3px 0 2px;}
+  .step .body p{font-size:13px; color:var(--text2); margin:0;}
+  .conflict{background:var(--surface2); border-radius:var(--radius); padding:14px 16px;}
+  .pill{font-size:12px; padding:4px 10px; border-radius:var(--radius-sm); display:inline-block;}
+  .nrow{display:flex; align-items:center; gap:10px; padding:8px 12px; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-sm);}
+  .nrow .n{font-size:12px; color:var(--text3); width:18px; text-align:right;}
+  .nrow .ev{flex:1; font-size:13px;}
+  .nrow .rc{font-size:12px; color:var(--text3);}
+  .nrow .urg{font-size:11px; padding:2px 8px; border-radius:var(--radius-sm); min-width:54px; text-align:center;}
+  .nrow .tg{font-size:11px; padding:2px 8px; border-radius:var(--radius-sm);}
+  .i{font-style:normal; font-weight:700; font-size:13px;}
+  @media(max-width:560px){ .grid2{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>venuehub — MVP at a glance</h1>
+  <div class="sub">space rental only · Iceland · request-to-book</div>
+  <p class="lede">A marketplace for booking event spaces for private life events and small-business one-offs (10–150 people). Pick a tab to walk a slice of the spec.</p>
+  <div class="tabs" id="tabs"></div>
+  <div id="panel"></div>
+</div>
+
+<script>
+var ramps = {
+  blue:{bg:'#e6f1fb',fg:'#185fa5'}, teal:{bg:'#e1f5ee',fg:'#0f6e56'},
+  purple:{bg:'#eeedfe',fg:'#534ab7'}, amber:{bg:'#faeeda',fg:'#854f0b'},
+  green:{bg:'#eaf3de',fg:'#3b6d11'}, gray:{bg:'#f1efe8',fg:'#5f5e5a'}
+};
+function ic(t){return '<span class="i">'+t+'</span>';}
+function card(glyph,title,body,ramp){
+  var c=ramps[ramp]||ramps.gray;
+  return '<div class="card"><div class="ttl"><span class="dot" style="background:'+c.bg+';color:'+c.fg+'">'+glyph+'</span>'+title+'</div><p>'+body+'</p></div>';
+}
+function listCard(title,items){
+  return '<div class="listcard"><h4>'+title+'</h4><ul>'+items.map(function(i){return '<li>'+i+'</li>';}).join('')+'</ul></div>';
+}
+function pcard(t,b){return '<div class="pcard"><h4>'+t+'</h4><p>'+b+'</p></div>';}
+function stat(l,v,s){return '<div class="stat"><p class="l">'+l+'</p><p class="v">'+v+'</p><p class="s">'+s+'</p></div>';}
+function chips(arr){return '<div class="chips">'+arr.map(function(t){return '<span class="chip">'+t+'</span>';}).join('')+'</div>';}
+function steps(arr){
+  return arr.map(function(s,i){
+    var c=ramps[s[3]]||ramps.gray, last=i===arr.length-1;
+    return '<div class="step"><div class="stepc"><span class="dot" style="background:'+c.bg+';color:'+c.fg+'">'+s[2]+'</span>'+(last?'':'<span class="stepline"></span>')+'</div>'+
+      '<div class="body" style="padding-bottom:'+(last?'0':'14px')+'"><h4>'+s[0]+'</h4><p>'+s[1]+'</p></div></div>';
+  }).join('');
+}
+
+var C = {
+  scope:{label:'Scope',glyph:ic('◎'),html:
+    '<div class="grid2" style="margin-bottom:12px;">'+
+      card('♥','Private life events','Weddings, birthdays, fermingar, christenings — one occasion, food-friendly halls.','purple')+
+      card('▣','Small business one-offs','Department parties, off-sites, team dinners. Shares the same inventory pool.','teal')+
+    '</div><div class="grid2">'+
+      listCard('In at MVP',['Space rental — venuehub is the middleman','Halls & function rooms, 10–150 people','Card payment only, on-platform','Optional Google Calendar sync per listing'])+
+      listCard('Out at MVP',['Catering, entertainment, equipment add-ons','Conference / large corporate','Production & creative (hourly) spaces','Hourly meeting-room bookings'])+
+    '</div>'},
+  roles:{label:'Roles & entities',glyph:ic('☻'),html:
+    '<div class="grid-auto" style="margin-bottom:20px;">'+
+      card('●','Guest','Books one occasion. Personal kennitala, optional until first booking.','blue')+
+      card('▲','Host','Lists & manages venues. Legal entity: personal, ehf, or einstaklingsfyrirtæki.','amber')+
+      card('◆','Admin','venuehub staff — disputes, moderation, verification. Internal tool.','gray')+
+    '</div><p class="label">Core entities</p>'+
+    chips(['User','Listing','Availability','BookingRequest','Booking','Message','Review','Payout','CalendarConnection'])+
+    '<p class="hint">A <code>BookingRequest</code> becomes a <code>Booking</code> when the host accepts. Each request opens one <code>Message</code> thread; each completed booking unlocks a two-way <code>Review</code> and triggers a <code>Payout</code>.</p>'},
+  lifecycle:{label:'Booking lifecycle',glyph:ic('⇄'),html:
+    steps([
+      ['Discover','Guest browses hybrid map+list, filters by date, block, region, price, allowed activities.','1','blue'],
+      ['Request wizard','4 steps: dates & block → event details → payment → review. Card is authorized, not charged.','2','blue'],
+      ['Awaiting host','"Beðið eftir samþykki" + 48-hour countdown. Host gets email + dashboard lead.','3','amber'],
+      ['Host accepts','Card charged, Booking created. Overlapping pending requests auto-declined. Calendar event written.','4','teal'],
+      ['Event day','T-24h reminder to both sides (toggleable).','5','gray'],
+      ['Review','Date passes → 14-day window. Two-way, goes live when both submit or window closes.','6','gray'],
+      ['Payout','Day after event: booking total − 10% commission paid to host\'s bank.','7','green']
+    ])+
+    '<p class="hint">If the host doesn\'t act in 48h or declines, the card hold is released and the request expires. The message thread stays open so the host can recover the lead.</p>'},
+  listings:{label:'Listings & search',glyph:ic('▤'),html:
+    '<p class="label">Listing creation — guided, save-and-resume</p>'+
+    chips(['Basics & address','Capacity (seated/standing)','Amenities & what\'s allowed','Photos (5+, hero)','Availability blocks','Pricing per block','Cancellation policy','VSK status','Connect calendar (optional)'])+
+    '<div class="grid-auto" style="margin-top:20px;">'+
+      card('⊞','Hybrid discovery','Desktop 50/50 list + live synced map. Mobile list with "Sýna á korti" toggle.','blue')+
+      card('⌕','Filters','Date/range, block, guest count, region, max price, allowed activities.','teal')+
+      card('▦','Airbnb-style detail','Photo grid hero, sticky booking widget, long-scroll info + reviews.','purple')+
+    '</div><p class="hint">Search is by region or venue name only at MVP — no free-text search. Blocks are <code>morning</code>, <code>afternoon</code>, <code>evening</code>, <code>full_day</code>.</p>'},
+  money:{label:'Money & cancellation',glyph:ic('$'),html:
+    '<div class="grid-auto" style="margin-bottom:20px;">'+
+      pcard('Flexible','Full refund ≥7 days · 50% 7–2 days · 0% within 48h')+
+      pcard('Moderate','Full refund ≥14 days · 50% 14–7 days · 0% within 7 days')+
+      pcard('Strict','50% refund ≥30 days · 0% within 30 days')+
+    '</div><div class="grid2">'+
+      stat('Commission','10%','placeholder, deducted from payout')+
+      stat('Payout timing','Day after','total − commission, to host bank')+
+    '</div><p class="hint">venuehub\'s commission is non-refundable on the refunded portion. Host-initiated cancellation = full refund to guest regardless of policy, plus a host penalty. No subscription, no listing fee.</p>'},
+  calendar:{label:'Calendar sync',glyph:ic('▥'),html:
+    '<p class="label">Optional per listing. Google Calendar at MVP, provider-agnostic shape. The external calendar is the source of truth for availability.</p>'+
+    '<div class="grid2" style="margin-bottom:20px;">'+
+      card('↓','Read sync (calendar → app)','12-month initial pull + webhooks. External events block every overlapping block.','blue')+
+      card('↑','Write sync (app → calendar)','Confirmed booking writes an event; ID stored as external_event_id. Cancellation deletes it.','teal')+
+    '</div>'+
+    '<div class="conflict"><div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><span style="color:var(--warn-fg);font-weight:700;">⚠</span><strong style="font-size:14px;">Conflict on a confirmed booking</strong></div>'+
+      '<p style="font-size:13px;color:var(--text2);margin:0 0 8px;">Booking moves to <code>in_conflict</code>, slot blocks, host gets an urgent alert. No auto-cancel, no auto-override — the host must choose:</p>'+
+      '<div style="display:flex;gap:8px;flex-wrap:wrap;">'+
+        '<span class="pill" style="background:var(--danger-bg);color:var(--danger-fg);">Cancel booking → full refund + host penalty</span>'+
+        '<span class="pill" style="background:var(--info-bg);color:var(--info-fg);">Remove external event → booking re-confirmed</span>'+
+      '</div></div>'+
+    '<p class="hint">Block hours (Atlantic/Reykjavik): morning 06–12, afternoon 12–18, evening 18–24. If Google revokes the token, the listing is flagged for reconnect and treated as fully disconnected after 14 unresolved days.</p>'},
+  notifs:{label:'Notifications',glyph:ic('✉'),html:
+    '<p class="label">14 transactional email triggers, language-aware (is/en). Mandatory by default; only 3 are user-toggleable. No SMS/push or marketing at MVP.</p>'+
+    '<div id="notif-list" style="display:flex;flex-direction:column;gap:6px;"></div>'+
+    '<p class="hint">Mandatory emails (operational or financial) can\'t be disabled — suppressing them would break the product. Toggleable ones live under "Tilkynningar" in account settings, default on.</p>'},
+  iceland:{label:'Iceland & trust',glyph:ic('⚑'),html:
+    '<div class="grid-auto" style="margin-bottom:20px;">'+
+      card('文','Languages','Icelandic primary, English fallback. i18n from day one.','purple')+
+      card('◉','Currency','ISK only, shown as 87.000 kr. No multi-currency.','amber')+
+      card('▤','Kennitala','Required for hosts at KYC; guests at first booking. Checksum-validated.','blue')+
+      card('▦','VSK','Host sets status per listing. Prices VSK-inclusive; receipt itemizes. We don\'t remit.','teal')+
+    '</div><p class="label">Trust & safety</p>'+
+    chips(['Host KYC via provider','No guest KYC','On-platform messaging required','Least-privilege calendar OAuth','Post-event reviews only','Disputes → admin@ inbox'])+
+    '<p class="label" style="margin-top:20px;">MVP success signals</p>'+
+    '<div class="grid-auto-sm">'+
+      stat('Time to respond','< 12h','median host response')+
+      stat('Acceptance','> 60%','request → accepted')+
+      stat('Refund/dispute','< 5%','of completed bookings')+
+    '</div>'}
+};
+
+var notifs = [
+  [1,'Request submitted','Guest','Normal',false],
+  [2,'Request received','Host','Normal',false],
+  [3,'Request accepted','Guest','Normal',false],
+  [4,'Request declined','Guest','Normal',false],
+  [5,'Request expired (48h no-response)','Guest + Host','Normal',false],
+  [6,'Booking cancelled by guest','Host','Normal',false],
+  [7,'Booking cancelled by host','Guest','High',false],
+  [8,'Calendar conflict on confirmed booking','Host','Urgent',false],
+  [9,'Event-tomorrow reminder (T-24h)','Guest + Host','Normal',true],
+  [10,'Review prompt (T+24h)','Guest + Host','Normal',true],
+  [11,'Refund processed','Guest','Normal',false],
+  [12,'Payout sent','Host','Normal',false],
+  [13,'Calendar token revoked / reconnect','Host','High',false],
+  [14,'New message in thread','Recipient','Normal',true]
+];
+function renderNotifs(){
+  var el=document.getElementById('notif-list'); if(!el)return;
+  var urg={Normal:{bg:'#f3f1ea',fg:'#5f5e5a'},High:{bg:'var(--warn-bg)',fg:'var(--warn-fg)'},Urgent:{bg:'var(--danger-bg)',fg:'var(--danger-fg)'}};
+  el.innerHTML = notifs.map(function(n){
+    var u=urg[n[3]];
+    var tag=n[4]?'<span class="tg" style="background:var(--info-bg);color:var(--info-fg);">toggleable</span>':'<span class="rc">mandatory</span>';
+    return '<div class="nrow"><span class="n">'+n[0]+'</span><span class="ev">'+n[1]+'</span><span class="rc">'+n[2]+'</span><span class="urg" style="background:'+u.bg+';color:'+u.fg+'">'+n[3]+'</span>'+tag+'</div>';
+  }).join('');
+}
+
+var order=['scope','roles','lifecycle','listings','money','calendar','notifs','iceland'];
+var active='scope';
+function renderTabs(){
+  document.getElementById('tabs').innerHTML = order.map(function(k){
+    return '<button class="tab'+(k===active?' on':'')+'" data-k="'+k+'">'+C[k].glyph+' '+C[k].label+'</button>';
+  }).join('');
+  Array.prototype.forEach.call(document.querySelectorAll('.tab'),function(b){
+    b.onclick=function(){active=b.getAttribute('data-k');renderTabs();renderPanel();};
+  });
+}
+function renderPanel(){
+  document.getElementById('panel').innerHTML=C[active].html;
+  if(active==='notifs')renderNotifs();
+}
+renderTabs();renderPanel();
+</script>
+</body>
+</html>
