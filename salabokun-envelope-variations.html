@@ -1,184 +1,611 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Salabókun — Envelope Variations &amp; Palettes in Context</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root{--ink:#1A1A1A;--cream:#FFF6EC;--ink3:#8C857E;--line:rgba(26,26,26,.13);--coral:#FF5A36}
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--cream);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.5}
-  .wrap{max-width:1060px;margin:0 auto;padding:0 26px}
-  header{padding:46px 0 22px}
-  header h1{font-family:'Fraunces',serif;font-weight:600;font-size:32px;margin:0 0 8px}
-  header p{margin:0;max-width:66ch;color:var(--ink3);font-size:15px}
-  section{padding:34px 0;border-top:1px solid var(--line)}
-  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--coral);margin:0 0 6px}
-  h2{font-family:'Fraunces',serif;font-weight:600;font-size:22px;margin:0 0 4px}
-  .sub{color:var(--ink3);font-size:14px;margin:0 0 22px;max-width:64ch}
-  /* envelope variation row */
-  .vars{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
-  .var{background:#FFF3EA;border:1px solid var(--line);border-radius:16px;padding:24px 10px 14px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
-  .var .nm{font-family:'Fraunces',serif;font-weight:600;font-size:14px}
-  .var .d{font-size:11.5px;color:var(--ink3);line-height:1.35}
-  /* context cards */
-  .ctxgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-  .ctx{border:1px solid var(--line);border-radius:20px;overflow:hidden}
-  .pane{padding:26px 24px 22px}
-  .badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.03em;border-radius:999px;padding:4px 12px;margin-bottom:16px}
-  .logorow{display:flex;align-items:center;gap:11px;margin-bottom:18px}
-  .logorow .wm{font-family:'Fraunces',serif;font-weight:600;font-size:22px}
-  .ctx h3{font-family:'Fraunces',serif;font-weight:600;font-size:25px;margin:0 0 6px;line-height:1.1}
-  .ctx .body{font-size:13.5px;margin:0 0 18px;line-height:1.5}
-  .btns{display:flex;gap:10px;flex-wrap:wrap}
-  .btn{font-weight:600;font-size:13px;border-radius:999px;padding:9px 17px;border:2px solid transparent;font-family:'Inter'}
-  .ghost{background:transparent}
-  .swrow{display:flex}
-  .swrow div{flex:1;height:54px}
-  .cap{font-family:ui-monospace,Menlo,monospace;font-size:10.5px;color:var(--ink3);padding:9px 14px;line-height:1.7}
-  .pn{font-family:'Fraunces',serif;font-weight:600;font-size:13px;padding:0 14px 10px;color:var(--ink3)}
-  footer{padding:28px 0 60px;color:var(--ink3);font-size:13px;max-width:66ch}
-  footer b{color:var(--ink)}
-  @media(max-width:860px){.vars{grid-template-columns:repeat(2,1fr)}.ctxgrid{grid-template-columns:1fr}}
-</style>
-</head>
-<body>
-<header>
-  <div class="wrap">
-    <h1>Envelope variations &amp; palettes in context</h1>
-    <p>Five ways to treat the envelope inside the pin, plus six full palettes shown doing real work — logo, a Fraunces tagline, Inter body, buttons and the complete colour set. Voice stays as locked: <em>Fraunces + Inter, warm editorial.</em></p>
-  </div>
-</header>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Salabókun — Envelope Variations &amp; Palettes in Context</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #1a1a1a;
+        --cream: #fff6ec;
+        --ink3: #8c857e;
+        --line: rgba(26, 26, 26, 0.13);
+        --coral: #ff5a36;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--cream);
+        color: var(--ink);
+        font-family: "Inter", system-ui, sans-serif;
+        line-height: 1.5;
+      }
+      .wrap {
+        max-width: 1060px;
+        margin: 0 auto;
+        padding: 0 26px;
+      }
+      header {
+        padding: 46px 0 22px;
+      }
+      header h1 {
+        font-family: "Fraunces", serif;
+        font-weight: 600;
+        font-size: 32px;
+        margin: 0 0 8px;
+      }
+      header p {
+        margin: 0;
+        max-width: 66ch;
+        color: var(--ink3);
+        font-size: 15px;
+      }
+      section {
+        padding: 34px 0;
+        border-top: 1px solid var(--line);
+      }
+      .eyebrow {
+        font-size: 12px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        font-weight: 700;
+        color: var(--coral);
+        margin: 0 0 6px;
+      }
+      h2 {
+        font-family: "Fraunces", serif;
+        font-weight: 600;
+        font-size: 22px;
+        margin: 0 0 4px;
+      }
+      .sub {
+        color: var(--ink3);
+        font-size: 14px;
+        margin: 0 0 22px;
+        max-width: 64ch;
+      }
+      /* envelope variation row */
+      .vars {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 14px;
+      }
+      .var {
+        background: #fff3ea;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 24px 10px 14px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        text-align: center;
+      }
+      .var .nm {
+        font-family: "Fraunces", serif;
+        font-weight: 600;
+        font-size: 14px;
+      }
+      .var .d {
+        font-size: 11.5px;
+        color: var(--ink3);
+        line-height: 1.35;
+      }
+      /* context cards */
+      .ctxgrid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+      .ctx {
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        overflow: hidden;
+      }
+      .pane {
+        padding: 26px 24px 22px;
+      }
+      .badge {
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.03em;
+        border-radius: 999px;
+        padding: 4px 12px;
+        margin-bottom: 16px;
+      }
+      .logorow {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        margin-bottom: 18px;
+      }
+      .logorow .wm {
+        font-family: "Fraunces", serif;
+        font-weight: 600;
+        font-size: 22px;
+      }
+      .ctx h3 {
+        font-family: "Fraunces", serif;
+        font-weight: 600;
+        font-size: 25px;
+        margin: 0 0 6px;
+        line-height: 1.1;
+      }
+      .ctx .body {
+        font-size: 13.5px;
+        margin: 0 0 18px;
+        line-height: 1.5;
+      }
+      .btns {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .btn {
+        font-weight: 600;
+        font-size: 13px;
+        border-radius: 999px;
+        padding: 9px 17px;
+        border: 2px solid transparent;
+        font-family: "Inter";
+      }
+      .ghost {
+        background: transparent;
+      }
+      .swrow {
+        display: flex;
+      }
+      .swrow div {
+        flex: 1;
+        height: 54px;
+      }
+      .cap {
+        font-family: ui-monospace, Menlo, monospace;
+        font-size: 10.5px;
+        color: var(--ink3);
+        padding: 9px 14px;
+        line-height: 1.7;
+      }
+      .pn {
+        font-family: "Fraunces", serif;
+        font-weight: 600;
+        font-size: 13px;
+        padding: 0 14px 10px;
+        color: var(--ink3);
+      }
+      footer {
+        padding: 28px 0 60px;
+        color: var(--ink3);
+        font-size: 13px;
+        max-width: 66ch;
+      }
+      footer b {
+        color: var(--ink);
+      }
+      @media (max-width: 860px) {
+        .vars {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .ctxgrid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="wrap">
+        <h1>Envelope variations &amp; palettes in context</h1>
+        <p>
+          Five ways to treat the envelope inside the pin, plus six full palettes
+          shown doing real work — logo, a Fraunces tagline, Inter body, buttons
+          and the complete colour set. Voice stays as locked:
+          <em>Fraunces + Inter, warm editorial.</em>
+        </p>
+      </div>
+    </header>
 
-<div class="wrap">
+    <div class="wrap">
+      <!-- ENVELOPE VARIATIONS -->
+      <section style="border-top: none">
+        <p class="eyebrow">Step A · envelope treatments</p>
+        <h2>Five envelopes.</h2>
+        <p class="sub">
+          All single-colour. Judge the shape here (shown in coral); colour comes
+          next.
+        </p>
+        <div class="vars">
+          <div class="var">
+            <svg width="68" height="68" viewBox="0 0 120 120">
+              <path
+                fill-rule="evenodd"
+                fill="#FF5A36"
+                d="M60 20 C40 20 25 35 25 55 C25 80 60 103 60 103 C60 103 95 80 95 55 C95 35 80 20 60 20 Z M44 42 L44 64 L76 64 L76 42 L60 54 L44 42 Z"
+              />
+            </svg>
+            <span class="nm">1 · Sealed</span
+            ><span class="d"
+              >Flap-V. Calm and iconic. The current version.</span
+            >
+          </div>
+          <div class="var">
+            <svg width="68" height="68" viewBox="0 0 120 120">
+              <path
+                fill-rule="evenodd"
+                fill="#FF5A36"
+                d="M60 20 C40 20 25 35 25 55 C25 80 60 103 60 103 C60 103 95 80 95 55 C95 35 80 20 60 20 Z M44 56 L44 73 L76 73 L76 56 Z M46 53 L60 41 L74 53 Z"
+              />
+            </svg>
+            <span class="nm">2 · Open flap</span
+            ><span class="d"
+              >Lid lifted — an invitation opening. More “event”.</span
+            >
+          </div>
+          <div class="var">
+            <svg width="68" height="68" viewBox="0 0 120 120">
+              <path
+                fill-rule="evenodd"
+                fill="#FF5A36"
+                d="M60 20 C40 20 25 35 25 55 C25 80 60 103 60 103 C60 103 95 80 95 55 C95 35 80 20 60 20 Z M44 57 L44 73 L76 73 L76 57 Z M51 40 L51 60 L69 60 L69 40 Z"
+              />
+            </svg>
+            <span class="nm">3 · Card peeking</span
+            ><span class="d"
+              >A card rising from the envelope. Reads “invite”.</span
+            >
+          </div>
+          <div class="var">
+            <svg width="68" height="68" viewBox="0 0 120 120">
+              <path
+                d="M60 22 C42 22 28 36 28 55 C28 78 60 100 60 100 C60 100 92 78 92 55 C92 36 78 22 60 22 Z"
+                fill="none"
+                stroke="#FF5A36"
+                stroke-width="8"
+              />
+              <path
+                fill-rule="evenodd"
+                fill="#FF5A36"
+                d="M46 46 L74 46 Q78 46 78 50 L78 64 Q78 68 74 68 L46 68 Q42 68 42 64 L42 50 Q42 46 46 46 Z M44 48 L60 59 L76 48 Z"
+              />
+            </svg>
+            <span class="nm">4 · Outline pin</span
+            ><span class="d"
+              >Hollow pin, solid envelope. Lighter, more delicate.</span
+            >
+          </div>
+          <div class="var">
+            <svg width="68" height="68" viewBox="0 0 120 120">
+              <path
+                fill-rule="evenodd"
+                fill="#FF5A36"
+                d="M60 22 C38 22 23 38 23 58 C23 83 60 104 60 104 C60 104 97 83 97 58 C97 38 82 22 60 22 Z M43 46 L43 66 Q43 68 45 68 L75 68 Q77 68 77 66 L77 46 L60 57 Z"
+              />
+            </svg>
+            <span class="nm">5 · Rounder</span
+            ><span class="d"
+              >Heavier pin, softer envelope. Warmest, friendliest.</span
+            >
+          </div>
+        </div>
+      </section>
 
-  <!-- ENVELOPE VARIATIONS -->
-  <section style="border-top:none">
-    <p class="eyebrow">Step A · envelope treatments</p>
-    <h2>Five envelopes.</h2>
-    <p class="sub">All single-colour. Judge the shape here (shown in coral); colour comes next.</p>
-    <div class="vars">
-      <div class="var">
-        <svg width="68" height="68" viewBox="0 0 120 120"><path fill-rule="evenodd" fill="#FF5A36" d="M60 20 C40 20 25 35 25 55 C25 80 60 103 60 103 C60 103 95 80 95 55 C95 35 80 20 60 20 Z M44 42 L44 64 L76 64 L76 42 L60 54 L44 42 Z"/></svg>
-        <span class="nm">1 · Sealed</span><span class="d">Flap-V. Calm and iconic. The current version.</span>
-      </div>
-      <div class="var">
-        <svg width="68" height="68" viewBox="0 0 120 120"><path fill-rule="evenodd" fill="#FF5A36" d="M60 20 C40 20 25 35 25 55 C25 80 60 103 60 103 C60 103 95 80 95 55 C95 35 80 20 60 20 Z M44 56 L44 73 L76 73 L76 56 Z M46 53 L60 41 L74 53 Z"/></svg>
-        <span class="nm">2 · Open flap</span><span class="d">Lid lifted — an invitation opening. More “event”.</span>
-      </div>
-      <div class="var">
-        <svg width="68" height="68" viewBox="0 0 120 120"><path fill-rule="evenodd" fill="#FF5A36" d="M60 20 C40 20 25 35 25 55 C25 80 60 103 60 103 C60 103 95 80 95 55 C95 35 80 20 60 20 Z M44 57 L44 73 L76 73 L76 57 Z M51 40 L51 60 L69 60 L69 40 Z"/></svg>
-        <span class="nm">3 · Card peeking</span><span class="d">A card rising from the envelope. Reads “invite”.</span>
-      </div>
-      <div class="var">
-        <svg width="68" height="68" viewBox="0 0 120 120"><path d="M60 22 C42 22 28 36 28 55 C28 78 60 100 60 100 C60 100 92 78 92 55 C92 36 78 22 60 22 Z" fill="none" stroke="#FF5A36" stroke-width="8"/><path fill-rule="evenodd" fill="#FF5A36" d="M46 46 L74 46 Q78 46 78 50 L78 64 Q78 68 74 68 L46 68 Q42 68 42 64 L42 50 Q42 46 46 46 Z M44 48 L60 59 L76 48 Z"/></svg>
-        <span class="nm">4 · Outline pin</span><span class="d">Hollow pin, solid envelope. Lighter, more delicate.</span>
-      </div>
-      <div class="var">
-        <svg width="68" height="68" viewBox="0 0 120 120"><path fill-rule="evenodd" fill="#FF5A36" d="M60 22 C38 22 23 38 23 58 C23 83 60 104 60 104 C60 104 97 83 97 58 C97 38 82 22 60 22 Z M43 46 L43 66 Q43 68 45 68 L75 68 Q77 68 77 66 L77 46 L60 57 Z"/></svg>
-        <span class="nm">5 · Rounder</span><span class="d">Heavier pin, softer envelope. Warmest, friendliest.</span>
-      </div>
+      <!-- PALETTES IN CONTEXT -->
+      <section>
+        <p class="eyebrow">Step B · palettes in context</p>
+        <h2>Six colour systems, in use.</h2>
+        <p class="sub">
+          Each card uses the full palette: logo, a primary button, an accent
+          tag, body text and surface. The first three are your earlier
+          finalists, expanded; the last three are new options.
+        </p>
+        <div class="ctxgrid">
+          <!-- 1 Sunset Strike -->
+          <div class="ctx">
+            <div class="pane" style="background: #fff3ea">
+              <span class="badge" style="background: #ffb400; color: #3a2a00"
+                >Brúðkaup · Fundir · Tónleikar</span
+              >
+              <div class="logorow">
+                <svg width="40" height="40" viewBox="0 0 120 120">
+                  <path
+                    fill-rule="evenodd"
+                    fill="#FF5A36"
+                    d="M60 20 C40 20 25 35 25 55 C25 80 60 103 60 103 C60 103 95 80 95 55 C95 35 80 20 60 20 Z M44 42 L44 64 L76 64 L76 42 L60 54 L44 42 Z"
+                  /></svg
+                ><span class="wm" style="color: #1a1a1a">salabókun</span>
+              </div>
+              <h3 style="color: #1a1a1a">Þar sem stundir verða til</h3>
+              <p class="body" style="color: #5a534d">
+                Where moments are made — find and book Iceland's local venues,
+                or open your own.
+              </p>
+              <div class="btns">
+                <span class="btn" style="background: #ff5a36; color: #fff"
+                  >Finndu sal →</span
+                ><span
+                  class="btn ghost"
+                  style="border-color: #1a1a1a; color: #1a1a1a"
+                  >Gerast gestgjafi</span
+                >
+              </div>
+            </div>
+            <div class="swrow">
+              <div style="background: #ff5a36"></div>
+              <div style="background: #ffb400"></div>
+              <div style="background: #e59a78"></div>
+              <div style="background: #1a1a1a"></div>
+              <div style="background: #fff3ea"></div>
+            </div>
+            <div class="pn">Sunset Strike</div>
+            <div class="cap">
+              #FF5A36 primary · #FFB400 accent · #E59A78 support · #1A1A1A ink ·
+              #FFF3EA surface
+            </div>
+          </div>
+
+          <!-- 2 Marigold Noir -->
+          <div class="ctx">
+            <div class="pane" style="background: #fff9ed">
+              <span class="badge" style="background: #181410; color: #f4a300"
+                >Brúðkaup · Fundir · Tónleikar</span
+              >
+              <div class="logorow">
+                <svg width="40" height="40" viewBox="0 0 120 120">
+                  <path
+                    fill-rule="evenodd"
+                    fill="#F4A300"
+                    d="M60 20 C40 20 25 35 25 55 C25 80 60 103 60 103 C60 103 95 80 95 55 C95 35 80 20 60 20 Z M44 42 L44 64 L76 64 L76 42 L60 54 L44 42 Z"
+                  /></svg
+                ><span class="wm" style="color: #181410">salabókun</span>
+              </div>
+              <h3 style="color: #181410">Þar sem stundir verða til</h3>
+              <p class="body" style="color: #5a4f3d">
+                Where moments are made — find and book Iceland's local venues,
+                or open your own.
+              </p>
+              <div class="btns">
+                <span class="btn" style="background: #f4a300; color: #181410"
+                  >Finndu sal →</span
+                ><span
+                  class="btn ghost"
+                  style="border-color: #181410; color: #181410"
+                  >Gerast gestgjafi</span
+                >
+              </div>
+            </div>
+            <div class="swrow">
+              <div style="background: #f4a300"></div>
+              <div style="background: #ff6b3d"></div>
+              <div style="background: #d9b26a"></div>
+              <div style="background: #181410"></div>
+              <div style="background: #fff9ed"></div>
+            </div>
+            <div class="pn">Marigold Noir</div>
+            <div class="cap">
+              #F4A300 primary · #FF6B3D accent · #D9B26A support · #181410 ink ·
+              #FFF9ED surface
+            </div>
+          </div>
+
+          <!-- 3 Fjord Green -->
+          <div class="ctx">
+            <div class="pane" style="background: #f2ede3">
+              <span class="badge" style="background: #d98e5a; color: #3a1f0d"
+                >Brúðkaup · Fundir · Tónleikar</span
+              >
+              <div class="logorow">
+                <svg width="40" height="40" viewBox="0 0 120 120">
+                  <path
+                    fill-rule="evenodd"
+                    fill="#3F7068"
+                    d="M60 20 C40 20 25 35 25 55 C25 80 60 103 60 103 C60 103 95 80 95 55 C95 35 80 20 60 20 Z M44 42 L44 64 L76 64 L76 42 L60 54 L44 42 Z"
+                  /></svg
+                ><span class="wm" style="color: #2a2724">salabókun</span>
+              </div>
+              <h3 style="color: #2a2724">Þar sem stundir verða til</h3>
+              <p class="body" style="color: #5d564d">
+                Where moments are made — find and book Iceland's local venues,
+                or open your own.
+              </p>
+              <div class="btns">
+                <span class="btn" style="background: #3f7068; color: #fff"
+                  >Finndu sal →</span
+                ><span
+                  class="btn ghost"
+                  style="border-color: #2a2724; color: #2a2724"
+                  >Gerast gestgjafi</span
+                >
+              </div>
+            </div>
+            <div class="swrow">
+              <div style="background: #3f7068"></div>
+              <div style="background: #d98e5a"></div>
+              <div style="background: #9db3a6"></div>
+              <div style="background: #2a2724"></div>
+              <div style="background: #f2ede3"></div>
+            </div>
+            <div class="pn">Fjord Green</div>
+            <div class="cap">
+              #3F7068 primary · #D98E5A accent · #9DB3A6 support · #2A2724 ink ·
+              #F2EDE3 surface
+            </div>
+          </div>
+
+          <!-- 4 Ember & Ink -->
+          <div class="ctx">
+            <div class="pane" style="background: #fbf1ea">
+              <span class="badge" style="background: #f2a65a; color: #3a2410"
+                >Brúðkaup · Fundir · Tónleikar</span
+              >
+              <div class="logorow">
+                <svg width="40" height="40" viewBox="0 0 120 120">
+                  <path
+                    fill-rule="evenodd"
+                    fill="#E8492A"
+                    d="M60 20 C40 20 25 35 25 55 C25 80 60 103 60 103 C60 103 95 80 95 55 C95 35 80 20 60 20 Z M44 42 L44 64 L76 64 L76 42 L60 54 L44 42 Z"
+                  /></svg
+                ><span class="wm" style="color: #211a17">salabókun</span>
+              </div>
+              <h3 style="color: #211a17">Þar sem stundir verða til</h3>
+              <p class="body" style="color: #5b4e47">
+                Where moments are made — find and book Iceland's local venues,
+                or open your own.
+              </p>
+              <div class="btns">
+                <span class="btn" style="background: #e8492a; color: #fff"
+                  >Finndu sal →</span
+                ><span
+                  class="btn ghost"
+                  style="border-color: #211a17; color: #211a17"
+                  >Gerast gestgjafi</span
+                >
+              </div>
+            </div>
+            <div class="swrow">
+              <div style="background: #e8492a"></div>
+              <div style="background: #f2a65a"></div>
+              <div style="background: #c97b6a"></div>
+              <div style="background: #211a17"></div>
+              <div style="background: #fbf1ea"></div>
+            </div>
+            <div class="pn">
+              Ember &amp; Ink
+              <span
+                style="
+                  font-family: Inter;
+                  font-weight: 400;
+                  color: #8c857e;
+                  font-size: 11px;
+                "
+                >· new</span
+              >
+            </div>
+            <div class="cap">
+              #E8492A primary · #F2A65A accent · #C97B6A support · #211A17 ink ·
+              #FBF1EA surface
+            </div>
+          </div>
+
+          <!-- 5 Saffron Clay -->
+          <div class="ctx">
+            <div class="pane" style="background: #fbf4e9">
+              <span class="badge" style="background: #c8502f; color: #fff"
+                >Brúðkaup · Fundir · Tónleikar</span
+              >
+              <div class="logorow">
+                <svg width="40" height="40" viewBox="0 0 120 120">
+                  <path
+                    fill-rule="evenodd"
+                    fill="#E6892B"
+                    d="M60 20 C40 20 25 35 25 55 C25 80 60 103 60 103 C60 103 95 80 95 55 C95 35 80 20 60 20 Z M44 42 L44 64 L76 64 L76 42 L60 54 L44 42 Z"
+                  /></svg
+                ><span class="wm" style="color: #2e2620">salabókun</span>
+              </div>
+              <h3 style="color: #2e2620">Þar sem stundir verða til</h3>
+              <p class="body" style="color: #5e5448">
+                Where moments are made — find and book Iceland's local venues,
+                or open your own.
+              </p>
+              <div class="btns">
+                <span class="btn" style="background: #e6892b; color: #fff"
+                  >Finndu sal →</span
+                ><span
+                  class="btn ghost"
+                  style="border-color: #2e2620; color: #2e2620"
+                  >Gerast gestgjafi</span
+                >
+              </div>
+            </div>
+            <div class="swrow">
+              <div style="background: #e6892b"></div>
+              <div style="background: #c8502f"></div>
+              <div style="background: #c9a56e"></div>
+              <div style="background: #2e2620"></div>
+              <div style="background: #fbf4e9"></div>
+            </div>
+            <div class="pn">
+              Saffron Clay
+              <span
+                style="
+                  font-family: Inter;
+                  font-weight: 400;
+                  color: #8c857e;
+                  font-size: 11px;
+                "
+                >· new</span
+              >
+            </div>
+            <div class="cap">
+              #E6892B primary · #C8502F accent · #C9A56E support · #2E2620 ink ·
+              #FBF4E9 surface
+            </div>
+          </div>
+
+          <!-- 6 Rún Rose -->
+          <div class="ctx">
+            <div class="pane" style="background: #fbf1ee">
+              <span class="badge" style="background: #f0a05a; color: #3a2410"
+                >Brúðkaup · Fundir · Tónleikar</span
+              >
+              <div class="logorow">
+                <svg width="40" height="40" viewBox="0 0 120 120">
+                  <path
+                    fill-rule="evenodd"
+                    fill="#B5495B"
+                    d="M60 20 C40 20 25 35 25 55 C25 80 60 103 60 103 C60 103 95 80 95 55 C95 35 80 20 60 20 Z M44 42 L44 64 L76 64 L76 42 L60 54 L44 42 Z"
+                  /></svg
+                ><span class="wm" style="color: #2b1f26">salabókun</span>
+              </div>
+              <h3 style="color: #2b1f26">Þar sem stundir verða til</h3>
+              <p class="body" style="color: #5c4e54">
+                Where moments are made — find and book Iceland's local venues,
+                or open your own.
+              </p>
+              <div class="btns">
+                <span class="btn" style="background: #b5495b; color: #fff"
+                  >Finndu sal →</span
+                ><span
+                  class="btn ghost"
+                  style="border-color: #2b1f26; color: #2b1f26"
+                  >Gerast gestgjafi</span
+                >
+              </div>
+            </div>
+            <div class="swrow">
+              <div style="background: #b5495b"></div>
+              <div style="background: #f0a05a"></div>
+              <div style="background: #c99aa0"></div>
+              <div style="background: #2b1f26"></div>
+              <div style="background: #fbf1ee"></div>
+            </div>
+            <div class="pn">
+              Rún Rose
+              <span
+                style="
+                  font-family: Inter;
+                  font-weight: 400;
+                  color: #8c857e;
+                  font-size: 11px;
+                "
+                >· new</span
+              >
+            </div>
+            <div class="cap">
+              #B5495B primary · #F0A05A accent · #C99AA0 support · #2B1F26 ink ·
+              #FBF1EE surface
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
-  </section>
-
-  <!-- PALETTES IN CONTEXT -->
-  <section>
-    <p class="eyebrow">Step B · palettes in context</p>
-    <h2>Six colour systems, in use.</h2>
-    <p class="sub">Each card uses the full palette: logo, a primary button, an accent tag, body text and surface. The first three are your earlier finalists, expanded; the last three are new options.</p>
-    <div class="ctxgrid">
-
-      <!-- 1 Sunset Strike -->
-      <div class="ctx">
-        <div class="pane" style="background:#FFF3EA">
-          <span class="badge" style="background:#FFB400;color:#3A2A00">Brúðkaup · Fundir · Tónleikar</span>
-          <div class="logorow"><svg width="40" height="40" viewBox="0 0 120 120"><path fill-rule="evenodd" fill="#FF5A36" d="M60 20 C40 20 25 35 25 55 C25 80 60 103 60 103 C60 103 95 80 95 55 C95 35 80 20 60 20 Z M44 42 L44 64 L76 64 L76 42 L60 54 L44 42 Z"/></svg><span class="wm" style="color:#1A1A1A">salabókun</span></div>
-          <h3 style="color:#1A1A1A">Þar sem stundir verða til</h3>
-          <p class="body" style="color:#5a534d">Where moments are made — find and book Iceland's local venues, or open your own.</p>
-          <div class="btns"><span class="btn" style="background:#FF5A36;color:#fff">Finndu sal →</span><span class="btn ghost" style="border-color:#1A1A1A;color:#1A1A1A">Gerast gestgjafi</span></div>
-        </div>
-        <div class="swrow"><div style="background:#FF5A36"></div><div style="background:#FFB400"></div><div style="background:#E59A78"></div><div style="background:#1A1A1A"></div><div style="background:#FFF3EA"></div></div>
-        <div class="pn">Sunset Strike</div>
-        <div class="cap">#FF5A36 primary · #FFB400 accent · #E59A78 support · #1A1A1A ink · #FFF3EA surface</div>
-      </div>
-
-      <!-- 2 Marigold Noir -->
-      <div class="ctx">
-        <div class="pane" style="background:#FFF9ED">
-          <span class="badge" style="background:#181410;color:#F4A300">Brúðkaup · Fundir · Tónleikar</span>
-          <div class="logorow"><svg width="40" height="40" viewBox="0 0 120 120"><path fill-rule="evenodd" fill="#F4A300" d="M60 20 C40 20 25 35 25 55 C25 80 60 103 60 103 C60 103 95 80 95 55 C95 35 80 20 60 20 Z M44 42 L44 64 L76 64 L76 42 L60 54 L44 42 Z"/></svg><span class="wm" style="color:#181410">salabókun</span></div>
-          <h3 style="color:#181410">Þar sem stundir verða til</h3>
-          <p class="body" style="color:#5a4f3d">Where moments are made — find and book Iceland's local venues, or open your own.</p>
-          <div class="btns"><span class="btn" style="background:#F4A300;color:#181410">Finndu sal →</span><span class="btn ghost" style="border-color:#181410;color:#181410">Gerast gestgjafi</span></div>
-        </div>
-        <div class="swrow"><div style="background:#F4A300"></div><div style="background:#FF6B3D"></div><div style="background:#D9B26A"></div><div style="background:#181410"></div><div style="background:#FFF9ED"></div></div>
-        <div class="pn">Marigold Noir</div>
-        <div class="cap">#F4A300 primary · #FF6B3D accent · #D9B26A support · #181410 ink · #FFF9ED surface</div>
-      </div>
-
-      <!-- 3 Fjord Green -->
-      <div class="ctx">
-        <div class="pane" style="background:#F2EDE3">
-          <span class="badge" style="background:#D98E5A;color:#3a1f0d">Brúðkaup · Fundir · Tónleikar</span>
-          <div class="logorow"><svg width="40" height="40" viewBox="0 0 120 120"><path fill-rule="evenodd" fill="#3F7068" d="M60 20 C40 20 25 35 25 55 C25 80 60 103 60 103 C60 103 95 80 95 55 C95 35 80 20 60 20 Z M44 42 L44 64 L76 64 L76 42 L60 54 L44 42 Z"/></svg><span class="wm" style="color:#2A2724">salabókun</span></div>
-          <h3 style="color:#2A2724">Þar sem stundir verða til</h3>
-          <p class="body" style="color:#5d564d">Where moments are made — find and book Iceland's local venues, or open your own.</p>
-          <div class="btns"><span class="btn" style="background:#3F7068;color:#fff">Finndu sal →</span><span class="btn ghost" style="border-color:#2A2724;color:#2A2724">Gerast gestgjafi</span></div>
-        </div>
-        <div class="swrow"><div style="background:#3F7068"></div><div style="background:#D98E5A"></div><div style="background:#9DB3A6"></div><div style="background:#2A2724"></div><div style="background:#F2EDE3"></div></div>
-        <div class="pn">Fjord Green</div>
-        <div class="cap">#3F7068 primary · #D98E5A accent · #9DB3A6 support · #2A2724 ink · #F2EDE3 surface</div>
-      </div>
-
-      <!-- 4 Ember & Ink -->
-      <div class="ctx">
-        <div class="pane" style="background:#FBF1EA">
-          <span class="badge" style="background:#F2A65A;color:#3a2410">Brúðkaup · Fundir · Tónleikar</span>
-          <div class="logorow"><svg width="40" height="40" viewBox="0 0 120 120"><path fill-rule="evenodd" fill="#E8492A" d="M60 20 C40 20 25 35 25 55 C25 80 60 103 60 103 C60 103 95 80 95 55 C95 35 80 20 60 20 Z M44 42 L44 64 L76 64 L76 42 L60 54 L44 42 Z"/></svg><span class="wm" style="color:#211A17">salabókun</span></div>
-          <h3 style="color:#211A17">Þar sem stundir verða til</h3>
-          <p class="body" style="color:#5b4e47">Where moments are made — find and book Iceland's local venues, or open your own.</p>
-          <div class="btns"><span class="btn" style="background:#E8492A;color:#fff">Finndu sal →</span><span class="btn ghost" style="border-color:#211A17;color:#211A17">Gerast gestgjafi</span></div>
-        </div>
-        <div class="swrow"><div style="background:#E8492A"></div><div style="background:#F2A65A"></div><div style="background:#C97B6A"></div><div style="background:#211A17"></div><div style="background:#FBF1EA"></div></div>
-        <div class="pn">Ember &amp; Ink <span style="font-family:Inter;font-weight:400;color:#8C857E;font-size:11px">· new</span></div>
-        <div class="cap">#E8492A primary · #F2A65A accent · #C97B6A support · #211A17 ink · #FBF1EA surface</div>
-      </div>
-
-      <!-- 5 Saffron Clay -->
-      <div class="ctx">
-        <div class="pane" style="background:#FBF4E9">
-          <span class="badge" style="background:#C8502F;color:#fff">Brúðkaup · Fundir · Tónleikar</span>
-          <div class="logorow"><svg width="40" height="40" viewBox="0 0 120 120"><path fill-rule="evenodd" fill="#E6892B" d="M60 20 C40 20 25 35 25 55 C25 80 60 103 60 103 C60 103 95 80 95 55 C95 35 80 20 60 20 Z M44 42 L44 64 L76 64 L76 42 L60 54 L44 42 Z"/></svg><span class="wm" style="color:#2E2620">salabókun</span></div>
-          <h3 style="color:#2E2620">Þar sem stundir verða til</h3>
-          <p class="body" style="color:#5e5448">Where moments are made — find and book Iceland's local venues, or open your own.</p>
-          <div class="btns"><span class="btn" style="background:#E6892B;color:#fff">Finndu sal →</span><span class="btn ghost" style="border-color:#2E2620;color:#2E2620">Gerast gestgjafi</span></div>
-        </div>
-        <div class="swrow"><div style="background:#E6892B"></div><div style="background:#C8502F"></div><div style="background:#C9A56E"></div><div style="background:#2E2620"></div><div style="background:#FBF4E9"></div></div>
-        <div class="pn">Saffron Clay <span style="font-family:Inter;font-weight:400;color:#8C857E;font-size:11px">· new</span></div>
-        <div class="cap">#E6892B primary · #C8502F accent · #C9A56E support · #2E2620 ink · #FBF4E9 surface</div>
-      </div>
-
-      <!-- 6 Rún Rose -->
-      <div class="ctx">
-        <div class="pane" style="background:#FBF1EE">
-          <span class="badge" style="background:#F0A05A;color:#3a2410">Brúðkaup · Fundir · Tónleikar</span>
-          <div class="logorow"><svg width="40" height="40" viewBox="0 0 120 120"><path fill-rule="evenodd" fill="#B5495B" d="M60 20 C40 20 25 35 25 55 C25 80 60 103 60 103 C60 103 95 80 95 55 C95 35 80 20 60 20 Z M44 42 L44 64 L76 64 L76 42 L60 54 L44 42 Z"/></svg><span class="wm" style="color:#2B1F26">salabókun</span></div>
-          <h3 style="color:#2B1F26">Þar sem stundir verða til</h3>
-          <p class="body" style="color:#5c4e54">Where moments are made — find and book Iceland's local venues, or open your own.</p>
-          <div class="btns"><span class="btn" style="background:#B5495B;color:#fff">Finndu sal →</span><span class="btn ghost" style="border-color:#2B1F26;color:#2B1F26">Gerast gestgjafi</span></div>
-        </div>
-        <div class="swrow"><div style="background:#B5495B"></div><div style="background:#F0A05A"></div><div style="background:#C99AA0"></div><div style="background:#2B1F26"></div><div style="background:#FBF1EE"></div></div>
-        <div class="pn">Rún Rose <span style="font-family:Inter;font-weight:400;color:#8C857E;font-size:11px">· new</span></div>
-        <div class="cap">#B5495B primary · #F0A05A accent · #C99AA0 support · #2B1F26 ink · #FBF1EE surface</div>
-      </div>
-
-    </div>
-  </section>
-
-  <footer>Tell me <b>which envelope (1–5)</b> and <b>which palette</b> to lock. I'll finalise the mark, build all lockups (horizontal, stacked, icon, mono, favicon set) and produce the full style guide in that system.</footer>
-</div>
-</body>
+  </body>
 </html>
