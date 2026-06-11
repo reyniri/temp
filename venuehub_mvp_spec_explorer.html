@@ -1,0 +1,224 @@
+<h2 class="sr-only">Interactive explorer of the venuehub MVP product spec, with tabs for scope, roles and entities, the booking lifecycle, listings and discovery, money and cancellation, calendar sync, notifications, and Iceland-specific rules.</h2>
+
+<div style="padding: 0.5rem 0 1rem;">
+  <div style="display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; margin-bottom:4px;">
+    <span style="font-size:22px; font-weight:500; color:var(--color-text-primary);">venuehub — MVP at a glance</span>
+    <span style="font-size:13px; color:var(--color-text-tertiary);">space rental only · Iceland · request-to-book</span>
+  </div>
+  <p style="font-size:14px; color:var(--color-text-secondary); margin:0 0 1.25rem; line-height:1.6;">A marketplace for booking event spaces for private life events and small-business one-offs (10–150 people). Pick a tab to walk a slice of the spec.</p>
+
+  <div id="vh-tabs" style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:1.25rem;"></div>
+  <div id="vh-panel"></div>
+</div>
+
+<script>
+(function(){
+  var C = {
+    scope: { label:"Scope", icon:"ti-target", html:
+      '<div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-bottom:1rem;">'+
+        card("ti-heart","Private life events","Weddings, birthdays, fermingar, christenings — one occasion, food-friendly halls.","purple")+
+        card("ti-briefcase","Small business one-offs","Department parties, off-sites, team dinners. Shares the same inventory pool.","teal")+
+      '</div>'+
+      '<div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">'+
+        listCard("In at MVP","success",["Space rental — venuehub is the middleman","Halls & function rooms, 10–150 people","Card payment only, on-platform","Optional Google Calendar sync per listing"])+
+        listCard("Out at MVP","danger",["Catering, entertainment, equipment add-ons","Conference / large corporate","Production & creative (hourly) spaces","Hourly meeting-room bookings"])+
+      '</div>'+
+      btn("Why is the scope drawn this way?","Walk me through the reasoning in §2 for why private + small-business share one inventory pool")
+    },
+    roles: { label:"Roles & entities", icon:"ti-users", html:
+      '<div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin-bottom:1.25rem;">'+
+        card("ti-user","Guest","Books one occasion. Personal kennitala, optional until first booking.","blue")+
+        card("ti-building-store","Host","Lists & manages venues. Legal entity: personal, ehf, or einstaklingsfyrirtæki.","amber")+
+        card("ti-shield-half","Admin","venuehub staff — disputes, moderation, verification. Internal tool.","gray")+
+      '</div>'+
+      '<p style="font-size:13px; color:var(--color-text-secondary); margin:0 0 8px;">Core entities</p>'+
+      '<div style="display:flex; flex-wrap:wrap; gap:6px;">'+
+        ['User','Listing','Availability','BookingRequest','Booking','Message','Review','Payout','CalendarConnection'].map(chip).join('')+
+      '</div>'+
+      '<p style="font-size:13px; color:var(--color-text-tertiary); margin:12px 0 0; line-height:1.6;">A <code>BookingRequest</code> becomes a <code>Booking</code> when the host accepts. Each request opens one <code>Message</code> thread; each completed booking unlocks a two-way <code>Review</code> and triggers a <code>Payout</code>.</p>'+
+      btn("Show the entity relationships","Draw an ERD of the venuehub core entities from §4 and how they reference each other")
+    },
+    lifecycle: { label:"Booking lifecycle", icon:"ti-route", html:
+      steps([
+        ["Discover","Guest browses hybrid map+list, filters by date, block, region, price, allowed activities.","ti-search","blue"],
+        ["Request wizard","4 steps: dates & block → event details → payment → review. Card is authorized, not charged.","ti-forms","blue"],
+        ["Awaiting host","“Beðið eftir samþykki” + 48-hour countdown. Host gets email + dashboard lead.","ti-clock","amber"],
+        ["Host accepts","Card charged, Booking created. Overlapping pending requests auto-declined. Calendar event written.","ti-check","teal"],
+        ["Event day","T-24h reminder to both sides (toggleable).","ti-calendar-event","gray"],
+        ["Review","Date passes → 14-day window. Two-way, goes live when both submit or window closes.","ti-star","gray"],
+        ["Payout","Day after event: booking total − 10% commission paid to host's bank.","ti-cash","green"]
+      ])+
+      '<p style="font-size:13px; color:var(--color-text-secondary); margin:14px 0 0; line-height:1.6;">If the host doesn’t act in 48h or declines, the card hold is released and the request expires. The message thread stays open so the host can recover the lead.</p>'+
+      btn("Explain the 48-hour accept window","Explain §5.6 host accept/decline including the auto-decline of overlapping requests and the calendar write")
+    },
+    listings: { label:"Listings & search", icon:"ti-building", html:
+      '<p style="font-size:13px; color:var(--color-text-secondary); margin:0 0 8px;">Listing creation — guided, save-and-resume</p>'+
+      '<div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:1.25rem;">'+
+        ['Basics & address','Capacity (seated/standing)','Amenities & what’s allowed','Photos (5+ , hero)','Availability blocks','Pricing per block','Cancellation policy','VSK status','Connect calendar (optional)'].map(chip).join('')+
+      '</div>'+
+      '<div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px;">'+
+        card("ti-map-2","Hybrid discovery","Desktop 50/50 list + live synced map. Mobile list with “Sýna á korti” toggle.","blue")+
+        card("ti-filter","Filters","Date/range, block, guest count, region, max price, allowed activities.","teal")+
+        card("ti-layout","Airbnb-style detail","Photo grid hero, sticky booking widget, long-scroll info + reviews.","purple")+
+      '</div>'+
+      '<p style="font-size:13px; color:var(--color-text-tertiary); margin:12px 0 0; line-height:1.6;">Search is by region or venue name only at MVP — no free-text search. Blocks are <code>morning</code>, <code>afternoon</code>, <code>evening</code>, <code>full_day</code>.</p>'
+    },
+    money: { label:"Money & cancellation", icon:"ti-cash", html:
+      '<div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin-bottom:1.25rem;">'+
+        policyCard("Flexible","Full refund ≥7 days · 50% 7–2 days · 0% within 48h")+
+        policyCard("Moderate","Full refund ≥14 days · 50% 14–7 days · 0% within 7 days")+
+        policyCard("Strict","50% refund ≥30 days · 0% within 30 days")+
+      '</div>'+
+      '<div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">'+
+        miniStat("Commission","10% (placeholder)","of booking total, deducted from payout")+
+        miniStat("Payout timing","Day after event","total − commission, to host bank")+
+      '</div>'+
+      '<p style="font-size:13px; color:var(--color-text-tertiary); margin:12px 0 0; line-height:1.6;">venuehub’s commission is non-refundable on the refunded portion. Host-initiated cancellation = full refund to guest regardless of policy, plus a host penalty. No subscription, no listing fee.</p>'
+    },
+    calendar: { label:"Calendar sync", icon:"ti-calendar", html:
+      '<p style="font-size:13px; color:var(--color-text-secondary); margin:0 0 10px;">Optional per listing. Google Calendar at MVP, provider-agnostic shape. The external calendar is the source of truth for availability.</p>'+
+      '<div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:1.25rem;">'+
+        card("ti-arrow-down","Read sync (calendar → app)","12-month initial pull + webhooks. External events block every overlapping block.","blue")+
+        card("ti-arrow-up","Write sync (app → calendar)","Confirmed booking writes an event; ID stored as external_event_id. Cancellation deletes it.","teal")+
+      '</div>'+
+      '<div style="background:var(--color-background-secondary); border-radius:var(--border-radius-lg); padding:14px 16px; margin-bottom:8px;">'+
+        '<div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;"><i class="ti ti-alert-triangle" style="font-size:18px; color:var(--color-text-warning);" aria-hidden="true"></i><span style="font-weight:500; font-size:14px;">Conflict on a confirmed booking</span></div>'+
+        '<p style="font-size:13px; color:var(--color-text-secondary); margin:0 0 8px; line-height:1.6;">Booking moves to <code>in_conflict</code>, slot blocks, host gets an urgent alert. No auto-cancel, no auto-override — the host must choose:</p>'+
+        '<div style="display:flex; gap:8px; flex-wrap:wrap;">'+
+          '<span style="font-size:12px; background:var(--color-background-danger); color:var(--color-text-danger); padding:4px 10px; border-radius:var(--border-radius-md);">Cancel booking → full refund + host penalty</span>'+
+          '<span style="font-size:12px; background:var(--color-background-info); color:var(--color-text-info); padding:4px 10px; border-radius:var(--border-radius-md);">Remove external event → booking re-confirmed</span>'+
+        '</div>'+
+      '</div>'+
+      '<p style="font-size:13px; color:var(--color-text-tertiary); margin:12px 0 0; line-height:1.6;">Block hours (Atlantic/Reykjavik): morning 06–12, afternoon 12–18, evening 18–24. If Google revokes the token, the listing is flagged for reconnect and treated as fully disconnected after 14 unresolved days.</p>'+
+      btn("Walk through the disconnect lifecycle","Explain §5.11 disconnect lifecycle — host-initiated vs token-revoked, and what happens to existing bookings")
+    },
+    notifs: { label:"Notifications", icon:"ti-bell", html:
+      '<p style="font-size:13px; color:var(--color-text-secondary); margin:0 0 10px;">14 transactional email triggers, language-aware (is/en). Mandatory by default; only 3 are user-toggleable. No SMS/push or marketing at MVP.</p>'+
+      '<div id="vh-notif-list" style="display:flex; flex-direction:column; gap:6px;"></div>'+
+      '<p style="font-size:13px; color:var(--color-text-tertiary); margin:12px 0 0; line-height:1.6;">Mandatory emails (operational or financial) can’t be disabled — suppressing them would break the product. Toggleable ones live under “Tilkynningar” in account settings, default on.</p>'
+    },
+    iceland: { label:"Iceland & trust", icon:"ti-flag", html:
+      '<div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin-bottom:1.25rem;">'+
+        card("ti-language","Languages","Icelandic primary, English fallback. i18n from day one.","purple")+
+        card("ti-coin","Currency","ISK only, shown as 87.000 kr. No multi-currency.","amber")+
+        card("ti-id","Kennitala","Required for hosts at KYC; guests at first booking. Checksum-validated.","blue")+
+        card("ti-receipt","VSK","Host sets status per listing. Prices VSK-inclusive; receipt itemizes. We don’t remit.","teal")+
+      '</div>'+
+      '<p style="font-size:13px; color:var(--color-text-secondary); margin:0 0 8px;">Trust & safety</p>'+
+      '<div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:1.25rem;">'+
+        ['Host KYC via provider','No guest KYC','On-platform messaging required','Least-privilege calendar OAuth','Post-event reviews only','Disputes → admin@ inbox'].map(chip).join('')+
+      '</div>'+
+      '<p style="font-size:13px; color:var(--color-text-secondary); margin:0 0 8px;">MVP success signals</p>'+
+      '<div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px;">'+
+        miniStat("Time to respond","< 12h","median host response")+
+        miniStat("Acceptance","> 60%","request → accepted")+
+        miniStat("Refund/dispute","< 5%","of completed bookings")+
+      '</div>'
+    }
+  };
+
+  function card(icon,title,body,ramp){
+    var c = ramps[ramp]||ramps.gray;
+    return '<div style="background:var(--color-background-primary); border:0.5px solid var(--color-border-tertiary); border-radius:var(--border-radius-lg); padding:14px 16px;">'+
+      '<div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;"><span style="width:28px; height:28px; border-radius:var(--border-radius-md); background:'+c.bg+'; display:flex; align-items:center; justify-content:center;"><i class="ti '+icon+'" style="font-size:17px; color:'+c.fg+';" aria-hidden="true"></i></span><span style="font-weight:500; font-size:14px;">'+title+'</span></div>'+
+      '<p style="font-size:13px; color:var(--color-text-secondary); margin:0; line-height:1.55;">'+body+'</p></div>';
+  }
+  function listCard(title,sem,items){
+    return '<div style="background:var(--color-background-primary); border:0.5px solid var(--color-border-tertiary); border-radius:var(--border-radius-lg); padding:14px 16px;">'+
+      '<p style="font-weight:500; font-size:14px; margin:0 0 8px; color:var(--color-text-'+sem+');">'+title+'</p>'+
+      '<ul style="margin:0; padding-left:18px; font-size:13px; color:var(--color-text-secondary); line-height:1.7;">'+items.map(function(i){return '<li>'+i+'</li>';}).join('')+'</ul></div>';
+  }
+  function policyCard(title,body){
+    return '<div style="background:var(--color-background-secondary); border-radius:var(--border-radius-md); padding:14px 16px;">'+
+      '<p style="font-weight:500; font-size:14px; margin:0 0 6px;">'+title+'</p>'+
+      '<p style="font-size:12px; color:var(--color-text-secondary); margin:0; line-height:1.6;">'+body+'</p></div>';
+  }
+  function miniStat(label,value,sub){
+    return '<div style="background:var(--color-background-secondary); border-radius:var(--border-radius-md); padding:14px 16px;">'+
+      '<p style="font-size:12px; color:var(--color-text-secondary); margin:0 0 4px;">'+label+'</p>'+
+      '<p style="font-size:20px; font-weight:500; margin:0 0 2px;">'+value+'</p>'+
+      '<p style="font-size:12px; color:var(--color-text-tertiary); margin:0;">'+sub+'</p></div>';
+  }
+  function chip(t){
+    return '<span style="font-size:12px; background:var(--color-background-secondary); color:var(--color-text-secondary); padding:5px 11px; border-radius:var(--border-radius-md);">'+t+'</span>';
+  }
+  function steps(arr){
+    return '<div style="display:flex; flex-direction:column; gap:0;">'+arr.map(function(s,i){
+      var c = ramps[s[3]]||ramps.gray;
+      var last = i===arr.length-1;
+      return '<div style="display:flex; gap:12px;">'+
+        '<div style="display:flex; flex-direction:column; align-items:center;">'+
+          '<span style="width:30px; height:30px; border-radius:50%; background:'+c.bg+'; display:flex; align-items:center; justify-content:center; flex:0 0 auto;"><i class="ti '+s[2]+'" style="font-size:16px; color:'+c.fg+';" aria-hidden="true"></i></span>'+
+          (last?'':'<span style="width:0; flex:1; border-left:0.5px solid var(--color-border-secondary); min-height:14px;"></span>')+
+        '</div>'+
+        '<div style="padding-bottom:'+(last?'0':'14px')+';">'+
+          '<p style="font-weight:500; font-size:14px; margin:4px 0 2px;">'+s[0]+'</p>'+
+          '<p style="font-size:13px; color:var(--color-text-secondary); margin:0; line-height:1.55;">'+s[1]+'</p>'+
+        '</div></div>';
+    }).join('')+'</div>';
+  }
+  function btn(label,prompt){
+    return '<button style="margin-top:14px; font-size:13px;" onclick="sendPrompt('+JSON.stringify(prompt).replace(/"/g,'&quot;')+')">'+label+' ↗</button>';
+  }
+
+  var ramps = {
+    blue:{bg:'#E6F1FB',fg:'#185FA5'}, teal:{bg:'#E1F5EE',fg:'#0F6E56'},
+    purple:{bg:'#EEEDFE',fg:'#534AB7'}, amber:{bg:'#FAEEDA',fg:'#854F0B'},
+    green:{bg:'#EAF3DE',fg:'#3B6D11'}, gray:{bg:'#F1EFE8',fg:'#5F5E5A'},
+    coral:{bg:'#FAECE7',fg:'#993C1D'}
+  };
+
+  var notifs = [
+    [1,"Request submitted","Guest","Normal",false],
+    [2,"Request received","Host","Normal",false],
+    [3,"Request accepted","Guest","Normal",false],
+    [4,"Request declined","Guest","Normal",false],
+    [5,"Request expired (48h no-response)","Guest + Host","Normal",false],
+    [6,"Booking cancelled by guest","Host","Normal",false],
+    [7,"Booking cancelled by host","Guest","High",false],
+    [8,"Calendar conflict on confirmed booking","Host","Urgent",false],
+    [9,"Event-tomorrow reminder (T-24h)","Guest + Host","Normal",true],
+    [10,"Review prompt (T+24h)","Guest + Host","Normal",true],
+    [11,"Refund processed","Guest","Normal",false],
+    [12,"Payout sent","Host","Normal",false],
+    [13,"Calendar token revoked / reconnect","Host","High",false],
+    [14,"New message in thread","Recipient","Normal",true]
+  ];
+  function renderNotifs(){
+    var el = document.getElementById('vh-notif-list'); if(!el) return;
+    var urg = {Normal:{bg:'var(--color-background-secondary)',fg:'var(--color-text-secondary)'},High:{bg:'var(--color-background-warning)',fg:'var(--color-text-warning)'},Urgent:{bg:'var(--color-background-danger)',fg:'var(--color-text-danger)'}};
+    el.innerHTML = notifs.map(function(n){
+      var u = urg[n[3]];
+      var tag = n[4]
+        ? '<span style="font-size:11px; background:var(--color-background-info); color:var(--color-text-info); padding:2px 8px; border-radius:var(--border-radius-md);">toggleable</span>'
+        : '<span style="font-size:11px; color:var(--color-text-tertiary); padding:2px 8px;">mandatory</span>';
+      return '<div style="display:flex; align-items:center; gap:10px; padding:8px 12px; background:var(--color-background-primary); border:0.5px solid var(--color-border-tertiary); border-radius:var(--border-radius-md);">'+
+        '<span style="font-size:12px; color:var(--color-text-tertiary); width:18px; text-align:right;">'+n[0]+'</span>'+
+        '<span style="flex:1; font-size:13px;">'+n[1]+'</span>'+
+        '<span style="font-size:12px; color:var(--color-text-tertiary);">'+n[2]+'</span>'+
+        '<span style="font-size:11px; background:'+u.bg+'; color:'+u.fg+'; padding:2px 8px; border-radius:var(--border-radius-md); min-width:54px; text-align:center;">'+n[3]+'</span>'+
+        tag+'</div>';
+    }).join('');
+  }
+
+  var order = ['scope','roles','lifecycle','listings','money','calendar','notifs','iceland'];
+  var active = 'scope';
+  var tabsEl = document.getElementById('vh-tabs');
+  var panelEl = document.getElementById('vh-panel');
+
+  function renderTabs(){
+    tabsEl.innerHTML = order.map(function(k){
+      var on = k===active;
+      return '<button data-k="'+k+'" style="display:inline-flex; align-items:center; gap:6px; font-size:13px; padding:7px 13px; border-radius:var(--border-radius-md); cursor:pointer; border:0.5px solid '+(on?'var(--color-border-primary)':'var(--color-border-tertiary)')+'; background:'+(on?'var(--color-background-secondary)':'transparent')+'; color:var(--color-text-'+(on?'primary':'secondary')+'); font-weight:'+(on?'500':'400')+';"><i class="ti '+C[k].icon+'" style="font-size:16px;" aria-hidden="true"></i>'+C[k].label+'</button>';
+    }).join('');
+    Array.prototype.forEach.call(tabsEl.querySelectorAll('button'), function(b){
+      b.onclick = function(){ active = b.getAttribute('data-k'); renderTabs(); renderPanel(); };
+    });
+  }
+  function renderPanel(){
+    panelEl.innerHTML = C[active].html;
+    if(active==='notifs') renderNotifs();
+  }
+  renderTabs(); renderPanel();
+})();
+</script>
